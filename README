@@ -1,30 +1,24 @@
 
+---
+
 # Telegram QR Code Bot
 
-A simple Telegram bot that generates QR codes from URLs sent by users. This bot is built with **Telegraf** and **QRCode** libraries.
-
-![alt text](image.png)
+A Telegram bot that generates QR codes from URLs using **Telegraf** and **QRCode** libraries.
+![alt text](image-3.png)
 ![alt text](image-1.png)
+
 
 ## Features
 
-- Responds to `/start` command with a welcome message.
-- Accepts URLs sent by users and generates a QR code.
-- Returns the QR code image as a reply to the user.
-
-
-## Requirements
-
-Before you begin, make sure you have the following installed on your local machine:
-
-- [Node.js](https://nodejs.org/) (preferably v14 or higher)- [Telegram Bot API Token](https://core.telegram.org/bots#botfather) (to create a bot on Telegram)
+- `/start` command sends a welcome message.
+- Generates QR codes from URLs and sends them back.
 
 ## Setup
 
-1. **Clone the repository**:
+1. **Clone the repo**:
     ```bash
-    git clone git@github.com:FadhilMulinya/CC.git
-    cd git@github.com:FadhilMulinya/qr-Code.git
+    git clone git@github.com:FadhilMulinya/qr-Code.git
+    cd qr-Code
     ```
 
 2. **Install dependencies**:
@@ -32,83 +26,31 @@ Before you begin, make sure you have the following installed on your local machi
     pnpm install
     ```
 
-3. **Create `.env` file**:
-`cp .env.example .env`
-     **Telegram Bot Token** as follows:
-
-    ```env
-    BOT_TOKEN=your_telegram_bot_token
+3. **Set up `.env`**:
+    ```bash
+    cp .env.example .env
     ```
+    Add your **BOT_TOKEN**.
 
 4. **Deploy to Vercel**:
-    - If you don’t have the [Vercel CLI](https://vercel.com/download), install it globally:
+    ```bash
+    npm install -g vercel
+    vercel
+    ```
 
-      ```bash
-      npm install -g vercel
-      ```
-
-    - Run the following command to deploy your project:
-
-      ```bash
-      vercel
-      ```
-
-    Follow the prompts and your bot will be deployed to a unique Vercel URL.
-
-5. **Set up the webhook for the bot**:
-    Once deployed, Vercel will give you a URL (e.g., `https://your-app-name.vercel.app`). Use this URL to set the webhook for your Telegram bot:
-
-    Run the following curl command in your terminal, replacing `<your_bot_token>` with your bot’s token and `https://your-app-name.vercel.app` with the Vercel URL:
-
+5. **Set the webhook**:
     ```bash
     curl -F "url=https://your-app-name.vercel.app" https://api.telegram.org/bot<your_bot_token>/setWebhook
     ```
 
-    This links your bot to the serverless function hosted on Vercel.
-
-## How It Works
-
-1. **Bot Interaction**:
-    - When users start the bot using `/start`, the bot will reply with a welcome message.
-    - When users send a URL to the bot, it generates a QR code for the URL and sends it back as an image.
-
-2. **Serverless Architecture**:
-    - The bot's functionality is handled by a serverless function deployed to Vercel. The `api/bot.js` file is the entry point for the bot’s logic.
-    - The `generateQR` function handles the QR code generation using the `QRCode` library, which outputs the QR code as a base64 image.
-
 ## How to Use
 
-- **Start the bot**: Type `/start` to get a welcome message.
-- **Generate a QR Code**: Send any URL to the bot, and it will reply with a QR code for that URL.
-
-## Local Development (Optional)
-
-You can also run the bot locally by setting up a local webhook with `ngrok` or another tunneling service to simulate a server environment on your machine.
-
-1. Install `ngrok`:
-    ```bash
-    npm install -g ngrok
-    ```
-
-2. Expose your local server:
-    ```bash
-    ngrok http 3000
-    ```
-
-3. Set the generated ngrok URL as your webhook:
-    ```bash
-    curl -F "url=http://<ngrok-url>" https://api.telegram.org/bot<your_bot_token>/setWebhook
-    ```
-
-## Customization
-
-- You can customize the QR code’s size, margin, and error correction level by passing options to the `QRCode.toDataURL()` method in `generateQR`.
-- The bot’s reply message can also be customized by modifying the `bot.start()` and `bot.on('text')` handlers in the `api/bot.js` file.
+- **Start**: Type `/start` to get a welcome message.
+- **Generate QR**: Send any URL for a QR code.
 
 ## License
 
-This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.
+MIT License.
 
 ---
 
-Feel free to customize the README further based on your specific needs and project structure. This should provide a clear guide for someone who wants to set up and deploy your Telegram QR Code bot on Vercel. Let me know if you need any further help!
